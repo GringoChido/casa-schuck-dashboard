@@ -1,49 +1,76 @@
-import { LayoutDashboard, BedDouble, CalendarDays, BarChart3, MessageSquare, Settings } from 'lucide-react';
+import { LayoutDashboard, Megaphone, UserPlus, BedDouble, CalendarDays, Settings } from 'lucide-react';
+import type { PageId } from '@/types/dashboard';
 
-const navItems = [
-  { icon: LayoutDashboard, label: 'Command Center', active: true },
-  { icon: BedDouble, label: 'Rooms', active: false },
-  { icon: CalendarDays, label: 'Reservations', active: false },
-  { icon: BarChart3, label: 'Analytics', active: false },
-  { icon: MessageSquare, label: 'Messages', active: false },
-  { icon: Settings, label: 'Settings', active: false },
+interface NavItem {
+  icon: typeof LayoutDashboard;
+  label: string;
+  page: PageId | null;
+}
+
+const navItems: NavItem[] = [
+  { icon: LayoutDashboard, label: 'Command Center', page: 'command-center' },
+  { icon: Megaphone, label: 'Marketing', page: 'marketing' },
+  { icon: UserPlus, label: 'Leads', page: 'leads' },
+  { icon: BedDouble, label: 'Rooms', page: null },
+  { icon: CalendarDays, label: 'Reservations', page: null },
+  { icon: Settings, label: 'Settings', page: null },
 ];
 
-export function Sidebar() {
+const pageLabels: Record<PageId, string> = {
+  'command-center': 'Command Center',
+  marketing: 'Marketing',
+  leads: 'Leads',
+};
+
+interface SidebarProps {
+  currentPage: PageId;
+  onNavigate: (page: PageId) => void;
+}
+
+export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-zinc-950 border-r border-zinc-800 flex flex-col z-50">
+    <aside className="fixed left-0 top-0 h-screen w-64 bg-dashboard-bg border-r border-dashboard-border flex flex-col z-50">
       {/* Logo */}
-      <div className="px-6 py-5 border-b border-zinc-800">
-        <h1 className="text-lg font-semibold tracking-tight text-white">
+      <div className="px-6 py-5 border-b border-dashboard-border">
+        <h1 className="text-xl font-serif font-medium tracking-[0.04em] text-white">
           Casa Schuck
         </h1>
-        <p className="text-[11px] text-zinc-500 tracking-wider uppercase mt-0.5">
-          Command Center
+        <p className="text-[11px] text-dashboard-text-secondary tracking-wider uppercase mt-0.5">
+          {pageLabels[currentPage]}
         </p>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
-        {navItems.map((item) => (
-          <button
-            key={item.label}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
-              item.active
-                ? 'bg-zinc-800 text-white'
-                : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
-            }`}
-          >
-            <item.icon className="w-4 h-4" />
-            {item.label}
-          </button>
-        ))}
+        {navItems.map((item) => {
+          const isActive = item.page === currentPage;
+          const isDisabled = item.page === null;
+
+          return (
+            <button
+              key={item.label}
+              onClick={() => item.page && onNavigate(item.page)}
+              disabled={isDisabled}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                isActive
+                  ? 'bg-dashboard-border text-white'
+                  : isDisabled
+                    ? 'text-dashboard-hover cursor-not-allowed'
+                    : 'text-dashboard-text-secondary hover:text-white hover:bg-dashboard-border/50'
+              }`}
+            >
+              <item.icon className="w-4 h-4" />
+              {item.label}
+            </button>
+          );
+        })}
       </nav>
 
       {/* Status */}
-      <div className="px-6 py-4 border-t border-zinc-800">
+      <div className="px-6 py-4 border-t border-dashboard-border">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 pulse-dot" />
-          <span className="text-xs text-zinc-500">All systems online</span>
+          <div className="w-2 h-2 rounded-full bg-dashboard-success pulse-dot" />
+          <span className="text-xs text-dashboard-text-secondary">All systems online</span>
         </div>
       </div>
     </aside>

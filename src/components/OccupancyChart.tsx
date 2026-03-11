@@ -7,17 +7,17 @@ interface OccupancyChartProps {
 
 export function OccupancyChart({ data }: OccupancyChartProps) {
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+    <div className="bg-dashboard-surface border border-dashboard-border rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-white">Occupancy & Revenue</h3>
+        <h3 className="text-sm font-serif font-medium tracking-[0.04em] text-white">Occupancy & Revenue</h3>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-dashboard-accent" />
-            <span className="text-[10px] text-zinc-500">Occupancy</span>
+            <span className="text-[10px] text-dashboard-text-secondary">Occupancy</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span className="text-[10px] text-zinc-500">Revenue</span>
+            <div className="w-2 h-2 rounded-full bg-dashboard-success" />
+            <span className="text-[10px] text-dashboard-text-secondary">Revenue</span>
           </div>
         </div>
       </div>
@@ -31,29 +31,29 @@ export function OccupancyChart({ data }: OccupancyChartProps) {
                 <stop offset="95%" stopColor="#BF754B" stopOpacity={0} />
               </linearGradient>
               <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#22c55e" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+                <stop offset="5%" stopColor="#5B7B6A" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#5B7B6A" stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis
               dataKey="date"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: '#52525b', fontSize: 10 }}
+              tick={{ fill: '#8A7D72', fontSize: 10 }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: '#52525b', fontSize: 10 }}
+              tick={{ fill: '#8A7D72', fontSize: 10 }}
               domain={[0, 100]}
             />
             <Tooltip
               contentStyle={{
-                background: '#18181b',
-                border: '1px solid #27272a',
+                background: '#231F1C',
+                border: '1px solid #342E29',
                 borderRadius: '8px',
                 fontSize: '12px',
-                color: '#e4e4e7',
+                color: '#E8E0D8',
               }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={((value: number, name: string) =>
@@ -70,7 +70,7 @@ export function OccupancyChart({ data }: OccupancyChartProps) {
             <Area
               type="monotone"
               dataKey="revenue"
-              stroke="#22c55e"
+              stroke="#5B7B6A"
               strokeWidth={1.5}
               fill="url(#revenueGradient)"
               yAxisId={0}
