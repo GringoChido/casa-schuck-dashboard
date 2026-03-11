@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --color-dashboard-bg: #09090b;
+  --color-dashboard-surface: #18181b;
+  --color-dashboard-border: #27272a;
+  --color-dashboard-hover: #3f3f46;
+  --color-dashboard-accent: #BF754B;
+  --color-dashboard-accent-light: #D4936B;
+  --color-dashboard-success: #22c55e;
+  --color-dashboard-warning: #eab308;
+  --color-dashboard-danger: #ef4444;
+  --color-dashboard-info: #3b82f6;
+}
+
+body {
+  margin: 0;
+  background: var(--color-dashboard-bg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-dashboard-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dashboard-hover);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
