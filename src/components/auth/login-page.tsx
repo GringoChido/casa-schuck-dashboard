@@ -15,7 +15,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
     e.preventDefault();
     setError('');
 
-    if (email === 'joshua@untold.works' && password === 'GringoChido1!') {
+    if (email === 'demo@casaschuck.com' && password === 'CasaSchuck2026!') {
       onLogin();
     } else {
       setError('Invalid email or password');
