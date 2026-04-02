@@ -1,14 +1,21 @@
 import { useState } from 'react';
 import { Bell, Search } from 'lucide-react';
 import { Sidebar } from '@/components/Sidebar';
+import { LoginPage } from '@/components/auth/login-page';
 import { CommandCenter } from '@/pages/command-center';
 import { MarketingDashboard } from '@/pages/marketing-dashboard';
 import { LeadsPage } from '@/pages/leads-page';
+import { ReservationsPage } from '@/pages/reservations-page';
+import { GuestsPage } from '@/pages/guests-page';
+import { ReviewsPage } from '@/pages/reviews-page';
+import { AnalyticsPage } from '@/pages/analytics-page';
+import { SettingsPage } from '@/pages/settings-page';
 import { alerts } from '@/data/mock';
 import type { PageId } from '@/types/dashboard';
 
-function App() {
+const App = () => {
   const [currentPage, setCurrentPage] = useState<PageId>('command-center');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
@@ -19,12 +26,15 @@ function App() {
 
   const unreadAlerts = alerts.filter((a: typeof alerts[number]) => !a.read).length;
 
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <div className="min-h-screen bg-dashboard-bg">
       <Sidebar currentPage={currentPage} onNavigate={setCurrentPage} />
 
       <main className="ml-64 p-6">
-        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-xl font-serif font-medium tracking-[0.04em] text-white">
@@ -62,9 +72,14 @@ function App() {
         {currentPage === 'command-center' && <CommandCenter />}
         {currentPage === 'marketing' && <MarketingDashboard />}
         {currentPage === 'leads' && <LeadsPage />}
+        {currentPage === 'reservations' && <ReservationsPage />}
+        {currentPage === 'guests' && <GuestsPage />}
+        {currentPage === 'reviews' && <ReviewsPage />}
+        {currentPage === 'analytics' && <AnalyticsPage />}
+        {currentPage === 'settings' && <SettingsPage />}
       </main>
     </div>
   );
-}
+};
 
 export default App;
